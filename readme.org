@@ -1,0 +1,14 @@
+* minigit
+
+A minimal repository viewer for Git.
+
+** How to use
+
+Prerequisties:
+
++ [[https://savannah.nongnu.org/projects/guile-git/][guile-git]]: Guile Scheme bindings for libgit2.
++ [[https://www.gnu.org/software/guile/][GNU Guile]]: Scheme implementation.
+
+#+BEGIN_SRC shell
+$ guile main.scm <REPOSITORIES_FOLDER>
+#+END_SRC
