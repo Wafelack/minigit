@@ -4,7 +4,7 @@ A minimal repository viewer for Git.
 
 ** How to use
 
-Prerequisties:
+Prerequisites:
 
 + [[https://savannah.nongnu.org/projects/guile-git/][guile-git]]: Guile Scheme bindings for libgit2.
 + [[https://www.gnu.org/software/guile/][GNU Guile]]: Scheme implementation.

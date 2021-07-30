@@ -39,6 +39,16 @@
   </body>
 </html>" title style title body))))
 
+(define (make-repo-page title repo body)
+  (make-page title
+             (call-with-output-string
+               (lambda (out) (format out
+                                     "<table style=\"padding-bottom: 2em;\"><tbody><tr><td><a href=\"/~a\">Log</a></td><td><a href=\"/~a/files\">Files</a></td></tr></tbody></table>
+                                     ~a"
+                                     repo
+                                     repo
+                                     body)))))
+
 (define (repo-list repos)
   (values '((content-type . (text/html)))
           (make-page "Minigit Index" 
@@ -47,7 +57,7 @@
                          (format out "~{~a~%~}" 
                                  (map 
                                    (lambda (repo) 
-                                     (call-with-output-string (lambda (out) (format out "<li><a href=\"./~a\">~a</a></li>" repo repo))))  
+                                     (call-with-output-string (lambda (out) (format out "<li><a href=\"/~a\">~a</a></li>" repo repo))))  
                                    repos)))))))
 (define (repo-log repo folder)
   (let ((commits (list-commits
@@ -56,7 +66,7 @@
     (if (null? commits)
       (not-found repo)
       (values '((content-type . (text/html)))
-              (make-page (symbol->string repo)
+              (make-repo-page repo repo
                          (call-with-output-string
                            (lambda (out)
                              (format out "<table><thead><tr>
