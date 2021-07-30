@@ -1,6 +1,5 @@
 (use-modules (sxml simple))
-
-(define style "style.css") ;; TODO: Replace with config value.
+(load "config.scm")
 
 (define (read-style style)
   (with-input-from-file 

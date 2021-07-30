@@ -52,7 +52,7 @@
                                   commits)))))))))
 (define (not-found repo)
   (values '((content-type . (text/html)))
-            (make-page "Repository not found" `(p Repository ,repo does not exist.))))
+            (make-page "Repository not found" `((p ,"Repository `",repo "` does not exist.")))))
 
 (define (make-request-handler repos folder)
   (lambda (request body)
