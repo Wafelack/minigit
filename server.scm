@@ -35,10 +35,10 @@
                              (tbody
                                ,(map
                                   (lambda (commit)
-                                    (let ((hash (car commit))
-                                          (author (car (cdr commit)))
-                                          (summary (car (cdr (cdr commit))))
-                                          (time (car (cdr (cdr (cdr commit))))))
+                                    (let ((hash (list-ref commit 0))
+                                          (author (list-ref commit 1))
+                                          (summary (list-ref commit 2))
+                                          (time (list-ref commit 3)))
                                       `(tr
                                          (td (@ (class date-summary))
                                              ,(strftime "%Y-%m-%d %H:%M" (localtime time)))
