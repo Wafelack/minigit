@@ -7,5 +7,10 @@
 (load "config.scm")
 
 (define repos (get-repos folder))
+(map display (get-entries
+       (let* ((repository (repository-open "../kernel"))
+              (oid (reference-target (repository-head repository)))
+              (head (commit-lookup repository oid)))
+         head)))
 
 (run-server (make-request-handler repos folder) 'http `(#:port ,port))

@@ -2,6 +2,14 @@
 
 A minimal repository viewer for Git.
 
+** Roadmap
+
+- [x] Log view.
+- [ ] Files view.
+- [ ] Commit view.
+- [ ] Change branch.
+- [ ] Languages usage bar.
+
 ** How to use
 
 Prerequisites:
