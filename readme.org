@@ -5,7 +5,9 @@ A minimal repository viewer for Git.
 ** Roadmap
 
 - [x] Log view.
-- [ ] Files view.
+- [~] Files view.
+    - [x] Files display.
+    - [ ] Show folders.
 - [ ] Commit view.
 - [ ] Change branch.
 - [ ] Languages usage bar.

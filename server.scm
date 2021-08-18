@@ -1,8 +1,9 @@
 (use-modules (web server)
              (web request)
              (web response)
-             (web uri)
-             (sxml simple))
+             (web uri))
+(use-modules (sxml simple))
+(use-modules (git))
 
 (load "templates.scm")
 
@@ -23,7 +24,7 @@
                    (call-with-output-string
                      (lambda (out) (format out "~a/~a" folder repo))))))
     (if (null? commits)
-      (not-found repo)
+      (not-found)
       (values '((content-type . (text/html)))
                 (make-repo-page repo repo
                            `((table
@@ -50,16 +51,62 @@
                                                 ,summary))
                                          (td ,author))))
                                   commits)))))))))
-(define (not-found repo)
+(define (not-found)
   (values '((content-type . (text/html)))
-            (make-page "Repository not found" `((p ,"Repository `",repo "` does not exist.")))))
+            (make-page "Not Found." `((center (h1 "Error 404: Not Found"))))))
+
+(define (file-view repo folder path)
+  (not-found)) ;; TODO
+
+(define (repo-tree repo folder)
+  (define repo_path (call-with-output-string
+                      (lambda (out) (format out "~a/~a" folder repo))))
+  (if (not (access? repo_path R_OK))
+    (not-found)
+    (let* ((repository (repository-open repo_path))
+           (oid (reference-target (repository-head repository)))
+           (head (commit-lookup repository oid)))
+      (values '((content-type . (text/html)))
+              (make-repo-page repo repo 
+                      `((table
+                          (thead
+                            (tr
+                              (td (b File))
+                              (td (b Size))))
+                          (tbody
+                            ,(map (lambda (entry)
+                                (let* ((name (car entry))
+                                      (id (cdr entry))
+                                      (blob (blob-lookup repository id))
+                                      (size (blob-size blob)))
+                                  `(tr
+                                     (td (@ (class date-summary))
+                                         (a (@ (href ,(call-with-output-string
+                                                        (lambda (out)
+                                                          (format out "/~a/files/~a" repo name))))) ,name))
+                                     (td ,size))))
+                           (get-entries head))))))))))
+
+(define (repo-files repo folder path)
+  (if (null? path)
+    (repo-tree repo folder)
+    (file-view repo folder path)))
+
+(define (route-tab repo folder name args)
+  (if (null? name)
+    (repo-log repo folder)
+    (case (string->symbol (car name))
+      ('files (repo-files repo folder args))
+      (else (not-found)))))
 
 (define (make-request-handler repos folder)
   (lambda (request body)
     (let ((path (path-components request)))
       (if (null? path)
         (repo-list repos)
-        (let ((repo (string->symbol (car path))))
+        (let ((repo (string->symbol (car path))) (next (cdr path)))
           (if (member repo repos)
-            (repo-log repo folder)
-            (not-found repo)))))))
+            (cond
+              ((> 0 (length next)) (route-tab repo folder (string->symbol (car next)) (cdr next)))
+              (else (route-tab repo folder next '())))
+            (not-found)))))))

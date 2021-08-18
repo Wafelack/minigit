@@ -16,15 +16,15 @@
             R_OK))
               (cons (string->symbol folder) next)
               next)))))
-
 (define (get-entries commit)
   (let ((entries '()))
     (tree-walk 
       (commit-tree commit)
       TREEWALK-PRE
       (lambda (root entry) 
-        (set! entries (cons `(,(tree-entry-name entry) 
-                              . ,(tree-entry->object (commit-owner commit) entry)) entries))
+        (if (eq? (tree-entry-type entry) 3)
+          (set! entries (cons `(,(tree-entry-name entry) 
+                              . ,(tree-entry-id entry)) entries)))
         0))
     entries))
 
