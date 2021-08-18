@@ -6,8 +6,9 @@ A minimal repository viewer for Git.
 
 - [x] Log view.
 - [~] Files view.
-    - [x] Files display.
+    - [x] File tree display.
     - [ ] Show folders.
+    - [ ] Raw files content.
 - [ ] Commit view.
 - [ ] Change branch.
 - [ ] Languages usage bar.
