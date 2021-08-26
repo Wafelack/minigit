@@ -24,7 +24,7 @@
       (lambda (root entry) 
         (if (eq? (tree-entry-type entry) 3)
           (set! entries (cons `(,(tree-entry-name entry) 
-                              . ,(tree-entry-id entry)) entries)))
+                              ,(tree-entry-id entry) ,(tree-entry-path entry)) entries)))
         0))
     entries))
 

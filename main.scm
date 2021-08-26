@@ -9,7 +9,7 @@
 (define *repo* (repository-open "../kernel"))
 
 (define repos (get-repos folder))
-(map (lambda (entry) 
+(map (lambda (entry) (display entry)(newline)) #;(lambda (entry) 
        (let ((name (car entry))
              (id (cdr entry)))
        (display name)
@@ -23,5 +23,7 @@
        (let* ((oid (reference-target (repository-head *repo*)))
               (head (commit-lookup *repo* oid)))
          head)))
+
+(exit 1)
 
 (run-server (make-request-handler repos folder) 'http `(#:port ,port))

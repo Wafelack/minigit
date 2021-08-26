@@ -1,3 +1,0 @@
-[submodule "guile-git"]
-	path = guile-git
-	url = https://gitlab.com/guile-git/guile-git.git
