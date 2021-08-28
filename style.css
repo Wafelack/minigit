@@ -1,19 +1,20 @@
+
 body {
-  color: #444;
-  background-color: #eee;
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 1050px;
-  line-height: 1.4;
-  font-size: 14px;
-  font-family: sans-serif;
-  padding: 0 10px;
+    color: #444;
+    background-color: #eee;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1050px;
+    line-height: 1.4;
+    font-size: 14px;
+    font-family: sans-serif;
+    padding: 0 10px;
 }
 .links {
-  padding-bottom: 2em;
+    padding-bottom: 2em;
 }
 .date-summary {
-  padding-right: 5em;
+    padding-right: 5em;
 }
