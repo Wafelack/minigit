@@ -1,6 +1,6 @@
 use anyhow::Result;
 use chrono::{Duration, NaiveDateTime};
-use git2::{Commit, Oid, Repository, TreeWalkMode, TreeWalkResult};
+use git2::{Commit, Oid, Repository};
 use std::{
     fs,
     io::{stdout, Write, self},

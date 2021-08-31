@@ -4,7 +4,7 @@ use crate::{
 };
 use anyhow::Result;
 use std::{
-    fs::{self, File},
+    fs::File,
     io::Write,
 };
 

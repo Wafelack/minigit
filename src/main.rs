@@ -3,17 +3,16 @@ mod repositories;
 mod templates;
 
 use anyhow::Result;
-use git2::Repository;
 use renderer::{render_index, render_repo_commits};
 use repositories::{create_repos_folders, get_repos, list_commits};
-use std::{env, process::exit};
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
 #[structopt(
     name = "minigit",
     author = "Wafelack <wafelack@riseup.net>",
-    about = "Static git page generator"
+    about = "Static git page generator",
+    after_help = "NOTE: You must use absolute paths with the `--in`, `--out` and `--css` options."
 )]
 struct Minigit {
     #[structopt(short = "o", long = "out")]
@@ -27,7 +26,7 @@ struct Minigit {
 fn main() -> Result<()> {
     let opt = Minigit::from_args();
 
-    let repos = get_repos("/home/wafelack/sources")?;
+    let repos = get_repos(&opt.input)?;
     render_index(
         &opt.output,
         &repos,
